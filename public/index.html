@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Midnightaffair – introductions, arranged by a real team</title>
+<title>Midnightaffair – Meet and Hookup, arranged by a real team</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +65,7 @@ footer{margin-top:28px;background:var(--card);border-top:1px solid var(--ln);tex
 <main id="app"></main>
 <footer>No signup needed.</footer>
 <dialog id="dlg"><h2>Before you chat</h2>
-<p>Chats are handled by the Midnightaffair concierge team, who reply on behalf of <b id="dn"></b> and arrange introductions. You are not messaging her directly.</p>
+<p>Chats are handled by the Midnightaffair team, who reply on behalf of <b id="dn"></b> and arrange introductions.</p>
 <label class="chk"><input type="checkbox" id="ok"><span>I’m 18 or older and I understand this.</span></label>
 <div id="ts"></div><p id="de" class="mu" style="color:var(--acc)"></p>
 <div class="row"><button class="btn ghost" onclick="dlg.close()">Cancel</button><button class="btn" onclick="go()">Start chat</button></div></dialog>
@@ -104,7 +104,7 @@ async function up(f){const b=await rd(f,1);if(!b)return '';const p=uid()+uid()+'
 const hue=n=>[...n].reduce((a,c)=>a+c.charCodeAt(0),0)*47%360;
 const ph=l=>{const h=hue(l.name),g=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='hsl(${h},70%,62%)'/><stop offset='1' stop-color='hsl(${(h+50)%360},65%,32%)'/></linearGradient></defs><rect width='400' height='500' fill='url(#g)'/><circle cx='200' cy='190' r='62' fill='rgba(255,255,255,.35)'/><ellipse cx='200' cy='400' rx='130' ry='110' fill='rgba(255,255,255,.35)'/></svg>`;return 'data:image/svg+xml,'+encodeURIComponent(g)};
 function home(){const all=S.l.filter(l=>l.live&&l.av&&l.cons),tags=[...new Set(all.map(l=>l.tag))],ls=all.filter(l=>flt=='all'||l.tag==flt);
-$('app').innerHTML=`<section class="hero"><span class="pill">Welcome to Midnightaffair</span><h1>Here are our available ladies.</h1><p class="mu">Every lady is verified. Choose the one you’d like to meet and our concierge team will chat with you and arrange the introduction.</p></section>
+$('app').innerHTML=`<section class="hero"><span class="pill">Welcome to Midnightaffair</span><h1>Here are our available ladies.</h1><p class="mu">Every lady is verified. Choose the one you’d like to meet and our team will chat with you and arrange the introduction.</p></section>
 <div class="fl">${['all',...tags].map(t=>`<button class="${flt==t?'on':''}" onclick="flt='${esc(t)}';home()">${t=='all'?'All ('+all.length+')':esc(t)}</button>`).join('')}</div>
 <div class="grid">${ls.map(l=>`<article class="pc"><div class="ph"><img src="${esc(l.img||ph(l))}" alt="${esc(l.name)}" loading="lazy"><span class="vf">✓ Verified</span><div class="ov"><h3>${esc(l.name)}, ${+l.age}</h3><p>${esc(l.city)}</p></div></div><div class="pb"><div class="tg"><span>${esc(l.tag)}</span></div><p>${esc(l.bio)}</p><button class="btn" onclick="ask('${l.id}')">Chat</button></div></article>`).join('')||'<p class="mu">No ladies are available right now. Please check back soon.</p>'}</div>`}
 function ask(id){want=id;$('dn').textContent=lname(id);$('ok').checked=false;$('de').textContent='';dlg.showModal();if(cfg.ts&&window.turnstile){tsid!==undefined?turnstile.reset(tsid):tsid=turnstile.render('#ts',{sitekey:cfg.ts,callback:t=>tk=t})}}
@@ -116,7 +116,7 @@ async function go(){if(!$('ok').checked){$('de').textContent='Please confirm to 
   live();await ld();dlg.close();location.hash='#/chat/'+c.id;return}
  let c=S.c.find(x=>x.cid==me&&x.lid==want);
  if(!c){c={id:uid(),cid:me,lid:want,st:'open'};S.c.push(c);
-  S.m.push({id:uid(),c:c.id,r:'concierge',t:Date.now(),b:`Hi, thanks for your interest in ${lname(want)}. You’re chatting with the Midnightaffair concierge team. Tell us a little about yourself and what you’re looking for, and we’ll arrange an introduction.`});sv()}
+  S.m.push({id:uid(),c:c.id,r:'concierge',t:Date.now(),b:`Hi, thanks for your interest in ${lname(want)}. Tell us a little about yourself and what you’re looking for, and we’ll arrange an introduction.`});sv()}
  dlg.close();location.hash='#/chat/'+c.id}
 /* ---- chat ---- */
 function chat(id){const c=S.c.find(x=>x.id==id);if(!c||(!sb&&c.cid!=me)){location.hash='#/';return}
