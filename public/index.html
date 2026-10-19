@@ -59,6 +59,7 @@ td,th{padding:9px 10px;border-bottom:1px solid var(--ln);text-align:left;font-si
 form.add{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:16px}form.add textarea{grid-column:1/-1}
 footer{margin-top:28px;background:var(--card);border-top:1px solid var(--ln);text-align:center;padding:24px 20px;font:600 17px Sora,system-ui,sans-serif;color:var(--ink)}footer:before{content:"✓ ";color:var(--ok)}
 @media(prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--acc)}}
+.b a{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}.b a:hover{opacity:.8}
 </style></head><body>
 <header><a href="#/" class="logo">Midnightaffair</a><button class="mb" id="mb" aria-label="Menu" aria-expanded="false" aria-controls="nv" onclick="menu()"><span></span></button><nav id="nv"><a href="#/how">How it works</a><a href="#/about">About us</a><a href="#/disclaimer">Disclaimers</a></nav></header>
 <main id="app"></main>
@@ -71,6 +72,7 @@ footer{margin-top:28px;background:var(--card);border-top:1px solid var(--ln);tex
 <script>
 const K='ml:v1',PIN='1234',$=i=>document.getElementById(i),uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lk=t=>{t=String(t);let o='',i=0;t.replace(/(?:https?:\/\/|www\.)[^\s<>"']+/gi,(u,p)=>{o+=esc(t.slice(i,p));let tl='';const m=u.match(/[.,;:!?)\]]+$/);if(m){tl=m[0];u=u.slice(0,-tl.length)}const h=/^www\./i.test(u)?'https://'+u:u;o+=`<a href="${esc(h)}" target="_blank" rel="noopener noreferrer nofollow">${esc(u)}</a>`+esc(tl);i=p+u.length+tl.length;return ''});return o+esc(t.slice(i))};
 const tm=t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 const L=(id,n,a,c,t,b,v)=>({id,name:n,age:a,city:c,tag:t,bio:b,av:v,cons:v,live:v});
 const seed=()=>({l:[L('l1','Amara',34,'Lagos','Relationship','Warm and funny. Loves live music and long dinners.',1),
@@ -121,7 +123,7 @@ $('app').innerHTML=`<a href="#/">← All ladies</a><h2 style="margin-top:10px">$
 <div class="note">You’re chatting with the agency concierge team, who reply on ${esc(lname(c.lid))}’s behalf and will arrange your introduction.</div>
 <div class="thread" id="th"></div><div class="send"><input id="in" placeholder="Write a message" maxlength="2000" onkeydown="event.key=='Enter'&&send('${id}','client')"><button class="btn" onclick="send('${id}','client')">Send</button></div>`;msgs(id)}
 function msgs(id,box='th',mine='client'){const th=$(box);if(!th)return;const c=S.c.find(x=>x.id==id)||{};
-th.innerHTML=S.m.filter(m=>m.c==id).map(m=>`<div class="b ${m.r==mine?'me':''} ${m.r=='concierge'?'ag':''}"><small>${m.r=='client'?(mine=='client'?'You':esc(c.cid)):'Agency concierge'} · ${tm(m.t)}</small>${esc(m.b)}</div>`).join('');th.scrollTop=th.scrollHeight}
+th.innerHTML=S.m.filter(m=>m.c==id).map(m=>`<div class="b ${m.r==mine?'me':''} ${m.r=='concierge'?'ag':''}"><small>${m.r=='client'?(mine=='client'?'You':esc(c.cid)):'Agency concierge'} · ${tm(m.t)}</small>${lk(m.b)}</div>`).join('');th.scrollTop=th.scrollHeight}
 async function send(id,r){const i=$('in'),b=i.value.trim();if(!b)return;i.value='';
  if(sb){const {error}=await sb.from('messages').insert({conversation_id:id,sender_role:r,sender_user:uidv,body:b.slice(0,2000)});if(error){alert('Message not sent: '+error.message);return}await ld()}
  else{S.m.push({id:uid(),c:id,r,b:b.slice(0,2000),t:Date.now()});sv()}
