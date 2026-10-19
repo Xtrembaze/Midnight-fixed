@@ -64,7 +64,7 @@ footer{margin-top:28px;background:var(--card);border-top:1px solid var(--ln);tex
 <header><a href="#/" class="logo">Midnightaffair</a><button class="mb" id="mb" aria-label="Menu" aria-expanded="false" aria-controls="nv" onclick="menu()"><span></span></button><nav id="nv"><a href="#/how">How it works</a><a href="#/about">About us</a><a href="#/disclaimer">Disclaimers</a></nav></header>
 <main id="app"></main>
 <footer>No signup needed.</footer>
-<dialog id="dlg"><h2>Before you chat</h2>
+<dialog id="dlg"><h2>NOTICE:</h2>
 <p>Chats are handled by the Midnightaffair team, who reply on behalf of <b id="dn"></b> and arrange introductions.</p>
 <label class="chk"><input type="checkbox" id="ok"><span>I’m 18 or older and I understand this.</span></label>
 <div id="ts"></div><p id="de" class="mu" style="color:var(--acc)"></p>
@@ -116,12 +116,12 @@ async function go(){if(!$('ok').checked){$('de').textContent='Please confirm to 
   live();await ld();dlg.close();location.hash='#/chat/'+c.id;return}
  let c=S.c.find(x=>x.cid==me&&x.lid==want);
  if(!c){c={id:uid(),cid:me,lid:want,st:'open'};S.c.push(c);
-  S.m.push({id:uid(),c:c.id,r:'concierge',t:Date.now(),b:`Hi, thanks for your interest in ${lname(want)}. Tell us a little about yourself and what you’re looking for, and we’ll arrange an introduction.`});sv()}
+  S.m.push({id:uid(),c:c.id,r:'concierge',t:Date.now(),b:`Hi, thanks for your interest in ${lname(want)}. Tell us a little about yourself and what you’re looking for.`});sv()}
  dlg.close();location.hash='#/chat/'+c.id}
 /* ---- chat ---- */
 function chat(id){const c=S.c.find(x=>x.id==id);if(!c||(!sb&&c.cid!=me)){location.hash='#/';return}
 $('app').innerHTML=`<a href="#/">← All ladies</a><h2 style="margin-top:10px">${esc(lname(c.lid))}</h2>
-<div class="note">You’re chatting with the agency concierge team, who reply on ${esc(lname(c.lid))}’s behalf and will arrange your introduction.</div>
+<div class="note">You’re chatting with our team, who reply on ${esc(lname(c.lid))}’s behalf and will arrange your introduction.</div>
 <div class="thread" id="th"></div><div class="send"><input id="in" placeholder="Write a message" maxlength="2000" onkeydown="event.key=='Enter'&&send('${id}','client')"><button class="btn" onclick="send('${id}','client')">Send</button></div>`;msgs(id)}
 function msgs(id,box='th',mine='client'){const th=$(box);if(!th)return;const c=S.c.find(x=>x.id==id)||{};
 th.innerHTML=S.m.filter(m=>m.c==id).map(m=>`<div class="b ${m.r==mine?'me':''} ${m.r=='concierge'?'ag':''}"><small>${m.r=='client'?(mine=='client'?'You':esc(c.cid)):'Agency concierge'} · ${tm(m.t)}</small>${lk(m.b)}</div>`).join('');th.scrollTop=th.scrollHeight}
